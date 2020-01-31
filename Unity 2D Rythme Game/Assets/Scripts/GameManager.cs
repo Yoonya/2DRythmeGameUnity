@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public float noteSpeed; //노트 스피드는 모두 공통이므로 여기서 관리
 
     // Start is called before the first frame update
+
+    public enum judges { NONE = 0, BAD, GOOD, PERFECT, MISS};
+
     void Start()
     {
         
