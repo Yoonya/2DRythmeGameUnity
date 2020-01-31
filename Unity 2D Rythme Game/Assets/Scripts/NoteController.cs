@@ -16,20 +16,34 @@ public class NoteController : MonoBehaviour
 
     }
 
+    private ObjectPooler noteObjectPooler;
     public GameObject[] Notes;
     private List<Note> notes = new List<Note>();
+    private float x, z, startY = 8.0f;
     private float beatInterval = 1.0f;
+
+    void MakeNote(Note note)
+    {
+        GameObject obj = noteObjectPooler.getObject(note.noteType);
+        x = obj.transform.position.x;
+        z = obj.transform.position.z;
+        obj.transform.position = new Vector3(x, startY, z);
+        obj.GetComponent<NoteBehavior>().Initialize();
+        obj.SetActive(true);
+
+    }
 
     IEnumerator AwaitMakeNote(Note note)
     {
         int noteType = note.noteType;
         int order = note.order;
         yield return new WaitForSeconds(order * beatInterval);
-        Instantiate(Notes[noteType - 1]);
+        MakeNote(note);
     }
     // Start is called before the first frame update
     void Start()
     {
+        noteObjectPooler = gameObject.GetComponent<ObjectPooler>();
         notes.Add(new Note(1, 1));
         notes.Add(new Note(2, 2));
         notes.Add(new Note(3, 3));
