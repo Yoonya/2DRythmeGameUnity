@@ -17,13 +17,14 @@ public class GameManager : MonoBehaviour
     public float noteSpeed; //노트 스피드는 모두 공통이므로 여기서 관리
 
     public GameObject scoreUI;
-    private float score;
+    public float score;
     private Text scoreText;
 
     public GameObject comboUI;
     private int combo;
     private Text comboText;
     private Animator comboAnimator;
+    public int maxCombo;
 
     public enum judges { NONE = 0, BAD, GOOD, PERFECT, MISS};
     public GameObject judgeUI;
@@ -109,6 +110,10 @@ public class GameManager : MonoBehaviour
         {
             comboText.text = "COMBO " + combo.ToString();
             comboAnimator.SetTrigger("Show");
+        }
+        if (maxCombo < combo)
+        {
+            maxCombo = combo;
         }
     }
 
